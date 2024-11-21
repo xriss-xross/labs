@@ -43,13 +43,13 @@ not_nothing s = if s == Nothing then False else True
 
 --Question c
 safe_tail :: [a] -> Maybe [a]
-safe_tail [] = Nothing
+safe_tail []   = Nothing
 safe_tail list = Just(tail list)
 
 --Question d
 mult_maybe :: Maybe Int -> Maybe Int -> Maybe Int
 mult_maybe (Just x) (Just y) = Just (x * y)
-mult_maybe _ _ = Nothing
+mult_maybe _ _               = Nothing
 
 --Part 5
 --Question b
@@ -68,19 +68,45 @@ data List a = Cons a (List a) | Empty deriving (Show, Read)
 --Question c
 is_empty :: List a -> Bool
 is_empty Empty = True 
-is_empty _ = False 
+is_empty _     = False 
 
 --Question d
 is_single :: List a -> Bool
 is_single (Cons _ Empty) = True
-is_single _ = False
+is_single _              = False
 
 --Question e
 mult :: List Int -> Int
-mult Empty = 1
+mult Empty       = 1
 mult (Cons x xs) = x * mult xs
 
 --Question f
 our_map :: (a -> b) -> List a -> List b
-our_map _ Empty = Empty                          
+our_map _ Empty       = Empty                          
 our_map f (Cons x xs) = Cons (f x) (our_map f xs)
+
+--Part 7
+--Question a
+data DTree a = Leaf a | Branch a (DTree a) (DTree a) deriving (Show, Read)
+
+--Question c
+tree_mult :: DTree Int -> Int
+tree_mult (Leaf x)       = x
+tree_mult (Branch x l r) = x * tree_mult l * tree_mult r
+
+--Question d
+sum_leafs :: DTree Int -> Int
+sum_leafs (Leaf x)       = x
+sum_leafs (Branch _ l r) = sum_leafs l + sum_leafs r
+
+--Question e
+count_threes :: DTree Int -> Int
+count_threes (Leaf 3)       = 1
+count_threes (Leaf _)       = 0
+count_threes (Branch 3 l r) = 1 + count_threes l + count_threes r
+count_threes (Branch _ l r) = count_threes l + count_threes r
+
+--Question f
+get_leafs :: DTree Int -> [Int]
+get_leafs (Leaf x)       = [x]
+get_leafs (Branch _ l r) = get_leafs l ++ get_leafs r
