@@ -36,7 +36,7 @@ print_maze maze = do
 --Question 3
 is_wall :: [String] -> (Int, Int) -> Bool
 is_wall maze (x, y) =
-    if (maze !! x) !! y == '#'
+    if (maze !! y) !! x == '#'
         then True
         else False
 
@@ -47,8 +47,8 @@ place_object maze (x, y) c =
 
 --Question 5
 move :: (Int, Int) -> Char -> (Int, Int)
-move (x, y) 'w' = (x, (y+1))
-move (x, y) 's' = (x, (y-1))
+move (x, y) 'w' = (x, (y-1))
+move (x, y) 's' = (x, (y+1))
 move (x, y) 'd' = ((x+1), y)
 move (x, y) 'a' = ((x-1), y)
 move cords _    = cords
@@ -57,13 +57,24 @@ move cords _    = cords
 can_move :: [String] -> (Int, Int) -> Char -> Bool
 can_move maze (x, y) c =
     let (x', y') = move (x, y) c
-    in is_wall maze (x', y')
+    in not (is_wall maze (x', y'))
 
 --Question 7
 game_loop :: [String] -> (Int, Int) -> (Int, Int) -> IO ()
 game_loop maze (px, py) (ex, ey) = do
-    let new_maze = set (set maze px py '@') ex ey '>' 
-    print_maze new_maze
+    if (px, py) == (ex, ey)
+        then do putStrLn "You win!"
+        else do
+            let new_maze = set (set maze px py '@') ex ey '>'
+            print_maze new_maze
 
-    --TODO: Get input and change maze state
-    --inp <- getLine
+            inp <- getLine
+            if inp == "quit"
+                then return ()
+                else
+                    if can_move maze (px, py) (head inp)
+                        then
+                            let p_pos = move (px, py) (head inp)
+                            in game_loop maze p_pos (ex, ey)
+                        else
+                            game_loop maze (px, py) (ex, ey)
