@@ -1,0 +1,8 @@
+sum <- 0
+while x < y+1 do
+begin
+    if x % 3 == 0 then
+        sum <- sum + x
+    x <- x + 1
+end
+output sum

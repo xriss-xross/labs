@@ -1,0 +1,9 @@
+prime <- true
+i <- x
+while prime != false AND i > 1
+begin
+    if x % i == 0 then
+        prime <- false
+    i <- i - 1
+end
+output prime
