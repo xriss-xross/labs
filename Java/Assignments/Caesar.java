@@ -21,7 +21,6 @@ public class Caesar {
         }
     }
 
-
     public static String rotate(int shift, String target) {
         String rotated_string = "";
         for (int i = 0; i < target.length(); i++) {
@@ -29,6 +28,7 @@ public class Caesar {
         }
         return rotated_string;
     }
+
 
     // acutal shift method
     public static int handle_shift(int ascii, int shifted_ascii) {
