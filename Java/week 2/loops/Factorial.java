@@ -3,6 +3,7 @@ public class Factorial {
         System.out.print("Enter an integer:");
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         long n = scanner.nextInt();
+        scanner.close();
         long factorial = 1;
 
         for(int i = 0; i < n ; i++) {

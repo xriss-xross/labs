@@ -5,6 +5,7 @@ public class Largest {
         System.out.print("Length of Array:");
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
+        scanner.close();
 
         int[] myArray = new int[n];
 

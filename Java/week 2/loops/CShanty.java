@@ -3,6 +3,7 @@ public class CShanty {
         System.out.print("How many rounds we doin' mateys?");
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         int n = scanner.nextInt();
+        scanner.close();
 
         for(int i = 0; i < n ; i++) {
             System.out.println("Soon may the compiler come,");
