@@ -2,8 +2,6 @@
 // Enter your name: Killian Ferdinand Carolan
 // Enter your student ID: 201823073
 //
-import java.util.*;
-import java.io.*;
 
 class COMP108W04 {
 
