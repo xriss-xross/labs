@@ -36,8 +36,6 @@ class COMP108W04 {
 			System.out.println(numberY + " is not a factor of " + numberX);
 	}
 
-	// fill in this method for Task 2
-	// finding all multiples of numberX that are factors of numberY
 	static void multipleFactor(int numberX, int numberY) {
 	
 		for (int i = numberX; i <= numberY; i += numberX) {
@@ -49,8 +47,6 @@ class COMP108W04 {
 
 	}
 
-	// Aim: to output all common multiples of numberX and numberY up to 100
-	// Find the bug and fix it by altering ONE line of code
 	static void bugOne(int numberX, int numberY) {
 		int i, bound;
 		
