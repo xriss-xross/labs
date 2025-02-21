@@ -1,8 +1,12 @@
-import java.util.Arrays;
-
 public class Brutus {
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(count("Hello world!")));
+        if (args.length > 1) {
+            System.out.println("Too many parameters!\nUsage: java Brutus \"cipher text\"");
+        } else if (args.length < 1) {
+            System.out.println("Too few parameters!\nUsage: java Brutus \"cipher text\"");
+        } else {
+            System.out.println(brutusHelper(args[0]));
+        }
     }
 
     public static final double[] english = {
@@ -15,7 +19,7 @@ public class Brutus {
         int[] letterCounts = {
             0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0,};
+            0, 0, 0, 0, 0, 0, 0, 0};
 
         for (int i = 0; i < str.length(); i++) {
             int ascii_chr = str.charAt(i);
@@ -29,5 +33,60 @@ public class Brutus {
         
         return letterCounts;
     }
-}
 
+    public static double[] frequency (String str) {
+        double[] letterFreqs = {
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0};
+    
+        for (int i = 0; i < str.length(); i++) {
+            int ascii_chr = str.charAt(i);
+            if (ascii_chr >= 65 && ascii_chr <= 90) {
+                letterFreqs[ascii_chr-65] += 1;
+            // checks for both upper and lower case
+            } else if (ascii_chr >= 97 && ascii_chr <= 122) {
+                letterFreqs[ascii_chr-97] += 1;
+            }
+        }
+
+        for (int i = 0; i < letterFreqs.length; i++) {
+            double count = letterFreqs[i];
+            if (count != 0) {
+                letterFreqs[i] = count / letterFreqs.length;
+            }
+        }
+
+        return letterFreqs;
+
+    }
+
+    public static double chiSquared (double[] freq1, double[] freq2) {
+        double x2 = 0;
+        for (int i = 0; i < freq1.length; i++) {
+            x2 += Math.pow((freq1[i] - freq2[i]), 2) / freq2[i];
+        }
+
+        return x2;
+    }   
+
+    public static String brutusHelper (String str) {
+        String decryptedString = "";
+        double chiMatch = Double.POSITIVE_INFINITY;
+
+        for (int i = 0; i < 26; i++) {
+            String newString = Caesar.rotate(i, str);
+            double[] letterFreq = frequency(newString);
+            double chiScore = chiSquared(letterFreq, english);
+
+            if (chiScore < chiMatch) {
+                chiMatch = chiScore;
+                decryptedString = newString;
+            }
+        }
+        
+        return decryptedString;
+
+        
+    }
+}
