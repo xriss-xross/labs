@@ -28,18 +28,28 @@ public class StringApp {
 
   // Part 2
   public static int factorCount(String a, String f) {
-    // your code here
-    return 0;
+    int i = a.indexOf(f);
+    int count = 0;
+    while (i != -1) {
+      count ++;
+      a = a.substring(i + f.length());
+      i = a.indexOf(f);
+    }
+    return count;
   }
 
   public static int factorCount(String a, String f, boolean caseSensitive) {
-    // your code here
-    return 0;
+    if (!caseSensitive) {
+      return factorCount(a.toLowerCase(), f.toLowerCase());
+    } else {
+      return factorCount(a, f);
+    }
   }
 
   // Part 3
   public static void main(String[] args) {
     String input = args[0];
+    System.out.println(factorCount("Hello Hello World!", input, false));
 
     for (char letter = 'a'; letter <= 'z'; letter++) {
       System.out.println(letter + ": " + 0);
