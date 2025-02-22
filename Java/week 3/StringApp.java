@@ -21,7 +21,7 @@ public class StringApp {
 
   // Part 1
   public static String pow(String s, int n) {
-    String nRepeat = new String(new char[n-1])
+    String nRepeat = new String(new char[n])
       .replace("\0", s);
     return nRepeat;
   }
@@ -48,11 +48,20 @@ public class StringApp {
 
   // Part 3
   public static void main(String[] args) {
-    String input = args[0];
-    System.out.println(factorCount("Hello Hello World!", input, false));
+    String input = args[0].toLowerCase();
+    int[] chrCount = new int[26];
 
-    for (char letter = 'a'; letter <= 'z'; letter++) {
-      System.out.println(letter + ": " + 0);
+    for (int i = 0; i < input.length(); i++) {
+      char chr = input.charAt(i);
+      if (chr >= 'a' && chr <= 'z') {
+        int index = chr - 'a';
+        chrCount[index]++;
+      }
+    }
+
+    for (int i = 0; i < 26; i++) {
+      char letter = (char) ('a' + i);
+      System.out.println(letter + ": " + chrCount[i]);
     }
   }
 }
