@@ -1,11 +1,11 @@
 public class Student {
-    public String name = new String();
-    public String email = new String();
-    public int yearOfBirth;
-    public int enrolmentYear;
-    public int studentId;
-    public int grade;
-    public boolean hasSubmitted;
+    private String name = new String();
+    private String email = new String();
+    private int yearOfBirth;
+    private int enrolmentYear;
+    private int studentId;
+    private int grade;
+    private boolean hasSubmitted;
 
     public Student() {
     }
@@ -35,10 +35,42 @@ public class Student {
     }
 
     public void updateGrade(int mark) {
-        grade = mark;
+        if (grade != mark) {
+            if (mark >= 1 && mark <= 100) {
+                grade = mark;
+            } else {
+                System.out.println("Enter a grade from 0-100.");
+                return;
+            }
+        }
+
+    }
+    public String getName() {
+        return name;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public int getYearOfBirth() {
+        return yearOfBirth;
+    }
+
+    public int getEnrolmentYear() {
+        return enrolmentYear;
+    }
+
+    public int getStudentId() {
+        return studentId;
     }
 
     public int getGrade() {
         return grade;
     }
+
+    public boolean getHasSubmitted() {
+        return hasSubmitted;
+    }
+
 }
