@@ -2,7 +2,6 @@
 // by Prudence Wong 2021-03-08
 //
 import java.util.*;
-import java.io.*;
 
 
 class COMP108W07App {
