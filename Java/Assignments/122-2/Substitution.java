@@ -4,6 +4,7 @@ public abstract class Substitution implements Cipher{
     public abstract char encrypt(char c);
     public abstract char decrypt(char c);
 
+    // concrete
     public String encrypt(String plaintext){
         String encrypted_s = "";
         for (int i = 0; i < plaintext.length(); i++) {
