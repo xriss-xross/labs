@@ -4,9 +4,6 @@ public class MonoAlphaSubstitution extends Substitution{
     private int[][] translation_table;
 
     public MonoAlphaSubstitution() {
-        for (int i = 0; i < salt.length(); i+=2) {
-
-        }
     }
 
     public MonoAlphaSubstitution(String salt) {
