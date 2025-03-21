@@ -1,33 +1,34 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class MonoAlphaSubstitution extends Substitution {
+public class Caesar extends MonoAlphaSubstitution {
     private final char comp122252201823073 = 'X';
 
-    protected Map<Character, Character> encryptTable = new HashMap<>();
-    protected Map<Character, Character> decryptTable = new HashMap<>();
+    private int shift;
 
-    // Identify table
-    public MonoAlphaSubstitution() {
+    public Caesar(){
         for (char c = 0; c < 256; c++) {
             encryptTable.put(c, c);
             decryptTable.put(c, c);
         }
     }
+    
+    public Caesar(int shift) {
+        super();
+        shift = (shift + 12225) % 26;
 
-    // Salted table
-    public MonoAlphaSubstitution(String salt) {
-        this();
-        
-        for (int i = 0; i < salt.length(); i += 2) {
-            char original = salt.charAt(i);
-            char encoded  = salt.charAt(i + 1);
-
-            encryptTable.put(original, encoded);
-            decryptTable.put(encoded, original);
+        for (char c = 'A'; c <= 'Z'; c++) {
+            char shifted = (char) ('A' + (c - 'A' + shift) % 26);
+            encryptTable.put(c, shifted);
+            decryptTable.put(shifted, c);
+        }
+        for (char c = 'a'; c <= 'z'; c++) {
+            char shifted = (char) ('a' + (c - 'a' + shift) % 26);
+            encryptTable.put(c, shifted);
+            decryptTable.put(shifted, c);
         }
     }
-    
+
     public char encrypt(char c) {
         return encryptTable.getOrDefault(c, c);
     }
@@ -40,13 +41,14 @@ public class MonoAlphaSubstitution extends Substitution {
         if (args.length > 3) {
             System.out.println("Too many parameters!");
             System.out.println(
-                "Usage: java MonoAlphaSubstitution encrypt key \"cipher text\""
+                "Usage: java Caesar encrypt n \"cipher text\""
                 );
             return;
+
         } else if (args.length < 2) {
             System.out.println("Too few parameters!");
             System.out.println(
-                "Usage: java MonoAlphaSubstitution encrypt key \"cipher text\""
+                "Usage: java Caesar encrypt n \"cipher text\""
                 );
             return;
         }
@@ -54,12 +56,12 @@ public class MonoAlphaSubstitution extends Substitution {
         String function = args[0];
         String text     = args[2];
 
-        MonoAlphaSubstitution cipher;
+        Caesar cipher;
 
         if (args.length == 3) {
-            cipher = new MonoAlphaSubstitution(args[1]);
+            cipher = new Caesar(Integer.parseInt(args[1]));
         } else {
-            cipher = new MonoAlphaSubstitution();
+            cipher = new Caesar();
         }
         
         String result = "";
@@ -80,8 +82,9 @@ public class MonoAlphaSubstitution extends Substitution {
                 "The first parameter must be \"encrypt\" or \"decrypt\"!"
                 );
             System.out.println(
-                "Usage: java MonoAlphaSubstitution encrypt key \"cipher text\""
+                "Usage: java Caesar encrypt key \"cipher text\""
                 );
         }
     }
+
 }

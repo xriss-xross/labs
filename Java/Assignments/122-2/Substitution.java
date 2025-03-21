@@ -15,7 +15,7 @@ public abstract class Substitution implements Cipher{
     public String decrypt(String encrypted_s){
         String unencrypted_s = "";
         for (int i = 0; i < encrypted_s.length(); i++) {
-            unencrypted_s += encrypt(encrypted_s.charAt(i));
+            unencrypted_s += decrypt(encrypted_s.charAt(i));
         }
         return unencrypted_s;
     };
