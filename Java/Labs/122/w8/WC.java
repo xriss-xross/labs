@@ -54,10 +54,8 @@ public class WC {
         return (double) distinctWords.size() / words.length;
     }
 
-    // UNRESOLVED 😓
-    // TODO: Try to fix as test file still returns slightly off result
     private static List<Integer> bagOfWords(String input) {
-        String[] words = input.split("\\s+");
+        String[] words = input.split("\\s");
         HashMap<String, Integer> wordCounts = new HashMap<>();
         for (int i = 0; i < words.length; i++) {
             String word = words[i].toLowerCase();
@@ -72,15 +70,15 @@ public class WC {
         Collections.sort(sortedWords);
 
         List<Integer> counts = new ArrayList<>();
+
         for (int i = 0; i < sortedWords.size(); i++) {
             counts.add(wordCounts.get(sortedWords.get(i)));
         }
-
         return counts;
     }
 
     private static List<Integer> bagOfWords(String input, List<String> sortedWords) {
-        String[] words = input.split("\\s+");
+        String[] words = input.split("\\s");
         HashMap<String, Integer> wordCounts = new HashMap<>();
         for (int i = 0; i < words.length; i++) {
             String word = words[i];
@@ -103,23 +101,16 @@ public class WC {
         return counts;
     }
 
-
-    /*
-        Ok I've spent a long time on this but I can't
-        find a solution that works, sorry. Maybe it has something to do with
-        my broken bagOfWords() function, maybe it has something with a regex
-        that I haven't found... sorry
-    */
     private static List<String> twoBagsOfWords(String input1, String input2) {
         String[] bag1 = input1.split("\\s+");
         String[] bag2 = input2.split("\\s+");
         HashSet<String> bigBag = new HashSet<>();
         
         for (int i = 0; i < bag1.length; i++) {
-            bigBag.add(bag2[i]);
+            bigBag.add(bag1[i]);
         }
 
-        for (int i = 0; i < bag1.length; i++) {
+        for (int i = 0; i < bag2.length; i++) {
             bigBag.add(bag2[i]);
         }
         
