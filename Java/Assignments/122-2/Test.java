@@ -1,7 +1,7 @@
 public class Test {
     public static void main(String[] args) {
-        Substitution test = new Caesar(0);
+        Substitution test = new Vigenere("COMPONETWOTWO");
 
-        System.out.println(test.decrypt("C"));
+        System.out.println(test.encrypt("fun fun fun"));
     }
 }
