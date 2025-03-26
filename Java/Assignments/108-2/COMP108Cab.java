@@ -3,8 +3,8 @@
 // Updated 2023-02-25
 //
 // Note: You are allowed to add additional methods if you need.
-// Name: 
-// Student ID: 
+// Name: Killian Carolan
+// Student ID: 201823073 
 //
 // Time Complexity and explanation: 
 // f denotes initial cabinet size
