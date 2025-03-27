@@ -30,7 +30,7 @@
 
 
 class COMP108Paging {
-	// O(nm) n = seqSearch and m = rSize
+	// O(nm) where n = seqSearch and m = rSize
 	static COMP108PagingOutput evictFIFO(int[] cArray, int cSize, int[] rArray, int rSize) {
 		COMP108PagingOutput output = new COMP108PagingOutput();
 		int nextEviction = 0;
