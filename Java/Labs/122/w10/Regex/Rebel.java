@@ -48,14 +48,14 @@ public class Rebel {
     }
 
     public static Matcher matchEmpire(String input) {
-        Pattern pattern = Pattern.compile("Rebel");
+        Pattern pattern = Pattern.compile("Rebel|Empire");
         Matcher matcher = pattern.matcher(input);
 
         return matcher;
     }
 
     public static Matcher matchLeia(String input) {
-        Pattern pattern = Pattern.compile("Rebel");
+        Pattern pattern = Pattern.compile("Rebel|Empire|Princess Leia");
         Matcher matcher = pattern.matcher(input);
 
         return matcher;
@@ -63,7 +63,7 @@ public class Rebel {
 
     // Parts 4,5
     public static Matcher matchUpper(String input) {
-        Pattern pattern = Pattern.compile("Rebel");
+        Pattern pattern = Pattern.compile("\\b[A-Z]\\w*\\b");
         Matcher matcher = pattern.matcher(input);
 
         return matcher;

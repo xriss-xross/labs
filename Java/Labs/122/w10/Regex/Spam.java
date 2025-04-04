@@ -18,13 +18,9 @@ public class Spam {
             System.out.println(spam);
             // Define our pattern and matches
             matcher = matchFrom(spam);
-            int count = 0;
             // Loop through our matches
             while(matcher.find()) {
-                count++;
-                System.out.println("Match number: " + count);
-                System.out.println("Index Start: " + matcher.start());
-                System.out.println("Index End: " + matcher.end());
+                System.out.println(matcher.group());
             }
         }
 
