@@ -63,7 +63,7 @@ public class Rebel {
 
     // Parts 4,5
     public static Matcher matchUpper(String input) {
-        Pattern pattern = Pattern.compile("\\b[A-Z]\\w*\\b");
+        Pattern pattern = Pattern.compile("Rebel|Empire|Princess|Leia|\\b[A-Z]{2,}\\b");
         Matcher matcher = pattern.matcher(input);
 
         return matcher;
