@@ -25,7 +25,7 @@ public class Book {
 		title = t;
 		author = a;
 		content = c;
-		pages = (int) Math.ceil(content.length()/666);
+		pages = (int) Math.ceil(content.length()/666.0);
 		edition = e;
 	}
 	
