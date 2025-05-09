@@ -8,7 +8,7 @@ public class VendingMachine {
     private int cassette;
     private int safe;
     private String password;
-    private List<Integer> acceptableDenomination =Arrays.asList(
+    private List<Integer> acceptableDenomination = Arrays.asList(
             1, 2, 5, 10, 20, 50, 100, 200
         );
 
@@ -28,6 +28,7 @@ public class VendingMachine {
     public int cancel() {
         int original = cassette;
         cassette = 0;
+
         return original;
     }
 
@@ -44,6 +45,7 @@ public class VendingMachine {
         }
         int original = safe;
         safe = 0;
+
         return original;
     }
 
@@ -52,15 +54,29 @@ public class VendingMachine {
         for (int i = 0; i < shelf.size(); i++) {
             catalogue.add(shelf.get(i).toString());
         }
+
         return catalogue;
     }
 
-    public int getPrice(int i) {
-        if (i < 0 || i >= shelf.size()) {
+    public int getPrice(int index) {
+        if (index < 0 || index >= shelf.size()) {
             throw new IndexOutOfBoundsException("Invalid book index");
         }
-        double price = shelf.get(i).getPages() * locationFactor;
+        double price = shelf.get(index).getPages() * locationFactor;
+
         return (int) Math.ceil(price);
+    }
+
+    public Book buyBook(int index) {
+        int p = getPrice(index);
+        if (cassette < p) {
+            throw new CassetteException();
+        }
+
+        cassette -= p;
+        safe += p;
+
+        return shelf.remove(index);
     }
 
     public VendingMachine(double l, String p) {
