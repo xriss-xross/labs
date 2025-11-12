@@ -86,12 +86,12 @@ INSERT INTO Stock VALUES (
 	"Pen"
 );
 INSERT INTO ItemsInTransactions VALUES (
-	'Newspaper',
+	"Newspaper",
 	149,          -- cost of item
 	18            -- transaction ID
 );
 INSERT INTO ItemsInTransactions VALUES (
-	'Pen',
+	"Pen",
 	99,
 	18
 );
@@ -116,7 +116,7 @@ WHERE Transactions.t_id IN (
 	SELECT DISTINCT ItemsInTransactions.t_id
 	FROM ItemsInTransactions
 	JOIN Stock ON ItemsInTransactions.name = Stock.name
-	WHERE Stock.type = 'Alcohol'
+	WHERE Stock.type = "Alcohol"
 )
 ORDER BY Transactions.t_id;
 
@@ -132,3 +132,27 @@ AS stock_left
 FROM Stock
 LEFT JOIN ItemsSold ON Stock.name = ItemsSold.name
 ORDER BY Stock.name;
+
+-- Question 6
+CREATE VIEW PrizeDrawPartOne AS
+SELECT Customers.c_id, COUNT(Transactions.t_id) AS
+number_of_transactions,
+	CASE WHEN EXISTS (
+		SELECT 1
+		FROM Employees WHERE
+		Employees.first_name = Customers.first_name AND
+		Employees.last_name  = Customers.last_name  AND
+		Employees.birthday   = Customers.birthday
+	) THEN 1 ELSE 0
+END AS is_employee
+FROM Customers
+LEFT JOIN Transactions ON
+	Customers.c_id = Transactions.c_id AND
+	Transactions.date BETWEEN "2025-08-01" AND "2025-08-31"
+GROUP BY Customers.c_id, Customers.first_name, Customers.last_name, Customers.birthday
+HAVING COUNT(Transactions.t_id) > 0;
+
+CREATE VIEW PrizeDraw AS
+SELECT c_id, number_of_transactions, is_employee
+FROM PrizeDrawPartOne
+ORDER BY is_employee, number_of_transactions, c_id;
