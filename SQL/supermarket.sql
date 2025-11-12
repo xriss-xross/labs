@@ -71,13 +71,13 @@ INSERT INTO Employees VALUES (
 INSERT INTO Transactions VALUES (
 	"2025-09-07", -- transaction date
 	false,        -- whether transaction was challenged
-	6,			  -- customer ID
-	5,			  -- employee ID
+	6,            -- customer ID
+	5,            -- employee ID
 	18            -- transcation ID
 );
 INSERT INTO Stock VALUES (
 	7,            -- number of items
-	null,		  -- type of item (whether there is a deal on them)
+	null,         -- type of item (whether there is a deal on them)
 	"Newspaper"   -- name of item
 );
 INSERT INTO Stock VALUES (
@@ -87,8 +87,8 @@ INSERT INTO Stock VALUES (
 );
 INSERT INTO ItemsInTransactions VALUES (
 	'Newspaper',
-	149,	      -- cost of item
-	18			  -- transaction ID
+	149,          -- cost of item
+	18            -- transaction ID
 );
 INSERT INTO ItemsInTransactions VALUES (
 	'Pen',
@@ -111,13 +111,24 @@ CASE
 	ELSE 0
 END AS above_25
 FROM Transactions
-
 JOIN Customers ON Transactions.c_id = Customers.c_id
 WHERE Transactions.t_id IN (
-    SELECT DISTINCT ItemsInTransactions.t_id
-    FROM ItemsInTransactions
-    JOIN Stock ON ItemsInTransactions.name = Stock.name
-    WHERE Stock.type = 'Alcohol'
+	SELECT DISTINCT ItemsInTransactions.t_id
+	FROM ItemsInTransactions
+	JOIN Stock ON ItemsInTransactions.name = Stock.name
+	WHERE Stock.type = 'Alcohol'
 )
+ORDER BY Transactions.t_id;
 
-ORDER BY Transactions.t_id
+-- Question 5
+CREATE VIEW ItemsSold AS
+SELECT name, COUNT(*) AS total_sold
+FROM ItemsInTransactions
+GROUP BY name;
+
+CREATE VIEW StockLeft AS
+SELECT Stock.name, (Stock.amount - ItemsSold.total_sold)
+AS stock_left
+FROM Stock
+LEFT JOIN ItemsSold ON Stock.name = ItemsSold.name
+ORDER BY Stock.name;
