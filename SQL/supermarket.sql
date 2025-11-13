@@ -136,23 +136,61 @@ ORDER BY Stock.name;
 -- Question 6
 CREATE VIEW PrizeDrawPartOne AS
 SELECT Customers.c_id, COUNT(Transactions.t_id) AS
-number_of_transactions,
-	CASE WHEN EXISTS (
-		SELECT 1
-		FROM Employees WHERE
-		Employees.first_name = Customers.first_name AND
-		Employees.last_name  = Customers.last_name  AND
-		Employees.birthday   = Customers.birthday
-	) THEN 1 ELSE 0
+number_of_transactions, 
+CASE WHEN EXISTS (
+	SELECT 1
+	FROM Employees WHERE
+	Employees.first_name = Customers.first_name AND
+	Employees.last_name  = Customers.last_name  AND
+	Employees.birthday   = Customers.birthday
+) THEN 1 ELSE 0
 END AS is_employee
 FROM Customers
 LEFT JOIN Transactions ON
 	Customers.c_id = Transactions.c_id AND
 	Transactions.date BETWEEN "2025-08-01" AND "2025-08-31"
-GROUP BY Customers.c_id, Customers.first_name, Customers.last_name, Customers.birthday
+GROUP BY 
+	Customers.c_id,
+	Customers.first_name,
+	Customers.last_name,
+	Customers.birthday
 HAVING COUNT(Transactions.t_id) > 0;
 
 CREATE VIEW PrizeDraw AS
 SELECT c_id, number_of_transactions, is_employee
 FROM PrizeDrawPartOne
 ORDER BY is_employee, number_of_transactions, c_id;
+
+-- Question 7
+CREATE VIEW ItemTypes AS
+SELECT
+	ItemsInTransactions.t_id,
+	ItemsInTransactions.name,
+	ItemsInTransactions.cost,
+	Stock.type
+FROM ItemsInTransactions
+JOIN Stock ON
+	ItemsInTransactions.name = Stock.name
+WHERE Stock.type IS NOT NULL;
+
+
+CREATE VIEW NumberedItemsInTransactions AS
+SELECT
+	ItemTypes.t_id,
+	ItemTypes.type,
+	ItemTypes.name,
+	COUNT(ItemTypesPart2.name) AS cheapest
+FROM ItemTypes
+LEFT JOIN ItemTypes AS ItemTypesPart2 ON
+	ItemTypes.t_id      = ItemTypesPart2.t_id AND
+	ItemTypes.type      = ItemTypesPart2.type AND
+	ItemTypesPart2.cost <= ItemTypes.cost
+GROUP BY
+	ItemTypes.t_id,
+	ItemTypes.type,
+	ItemTypes.name,
+	ItemTypes.cost
+ORDER BY
+	ItemTypes.t_id,
+	ItemTypes.type,
+	cheapest;
